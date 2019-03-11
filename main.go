@@ -34,19 +34,9 @@ func receiver(w http.ResponseWriter, r *http.Request) {
 
 	name := fmt.Sprintf("viber_incoming")
 
-	query, err := AMQPChannel.QueueDeclare(
-		name,
-		true,
-		false,
-		false,
-		false,
-		nil,
-	)
-	failOnError(err, "Failed to declare a queue")
-
 	err = AMQPChannel.Publish(
 		"",
-		query.Name,
+		name,
 		false,
 		false,
 		amqp.Publishing{
