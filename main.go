@@ -53,11 +53,6 @@ func receiver(w http.ResponseWriter, r *http.Request) {
 	w.Write(callbackRequestJson)
 }
 
-func redirect(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	http.ServeFile(w, r, "./static/redirect.html")
-}
-
 func init() {
 	err := godotenv.Load()
 	failOnError(err, "Error loading .env file")
@@ -83,7 +78,10 @@ func init() {
 
 func main() {
 	http.HandleFunc("/", receiver)
-	http.HandleFunc("/redirect", redirect)
+
+	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, r.URL.Path[1:])
+	})
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("LISTEN_PORT")), nil))
 	defer AMQPConnection.Close()
