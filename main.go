@@ -54,7 +54,8 @@ func receiver(w http.ResponseWriter, r *http.Request) {
 }
 
 func redirect(w http.ResponseWriter, r *http.Request) {
-	http.FileServer(http.Dir("./static"))
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	http.ServeFile(w, r, "./static/redirect.html")
 }
 
 func init() {
