@@ -79,10 +79,6 @@ func init() {
 func main() {
 	http.HandleFunc("/", receiver)
 
-	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, r.URL.Path[1:])
-	})
-
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("LISTEN_PORT")), nil))
 	defer AMQPConnection.Close()
 	defer AMQPChannel.Close()
