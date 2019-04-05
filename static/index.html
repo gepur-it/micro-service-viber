@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var urlParams = new URLSearchParams(window.location.search)
+    var href = "viber://pa?chatURI="+urlParams.get('chatURI')+"&context="+urlParams.get('context')+"&text="+urlParams.get('text')
+    var link = document.createElement("a")
+    link.id = 'viber'
+    link.href = href
+    link.innerText = "Open viber"
+    document.body.appendChild(link)
+    console.info(document.getElementById('viber'))
+    document.getElementById('viber').click()
+</script>
+</body>
+</html>
